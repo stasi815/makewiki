@@ -2,6 +2,8 @@ from django.shortcuts import render
 from wiki.models import Page
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.http import HttpResponse
+
 
 
 class PageList(ListView):
@@ -13,9 +15,10 @@ class PageList(ListView):
     """
     model = Page
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         """ Returns a list of wiki pages. """
-        pass
+        context = super().get_context_data(**kwargs)
+        return HttpResponse(context)
 
 
 class PageDetailView(DetailView):
