@@ -2,6 +2,13 @@
 
 {% block content %}
 
-
-
+<div class="container">
+    <ul>
+        <h1>{{ page.title }}</h1>
+        <li>Author: {{ page.author }}</li>
+        <li>{{ page.content }}</li>
+        <li>Article Created on: {{ page.created }}</li>
+        <li>Articel Last modified: {{ page.modified }}</li>
+    </ul>
+</div>
 {% endblock %}

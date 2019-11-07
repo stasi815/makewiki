@@ -40,7 +40,10 @@ class PageDetailView(DetailView):
 
     def get(self, request, slug):
         """ Returns a specific of wiki page by slug. """
-        pass
+        context = {
+          'page': Page.objects.get(slug=slug),
+        }
+        return render(request, 'page.html', context)
 
     def post(self, request, slug):
         pass
