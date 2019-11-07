@@ -2,23 +2,21 @@ from django.shortcuts import render
 from wiki.models import Page
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.http import HttpResponse
 
 
 
 class PageList(ListView):
     """
-    CHALLENGES:
-      1. On GET, display a homepage that shows all Pages in your wiki.
-      2. Replace this CHALLENGE text with a descriptive docstring for PageList.
-      3. Replace pass below with the code to render a template named `list.html`.
+    Establishes parameters and methods for the PageList class.
     """
     model = Page
 
-    def get(self, request, **kwargs):
+    def get(self, request):
         """ Returns a list of wiki pages. """
-        context = super().get_context_data(**kwargs)
-        return HttpResponse(context)
+        context = {
+          'page_list': Page.objects.all(),
+        }
+        return render(request, 'list.html', context)
 
 
 class PageDetailView(DetailView):
