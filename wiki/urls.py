@@ -12,8 +12,8 @@ from .views import PageList, PageDetailView
       - DO NOT CHANGE the `name` argument.
       - Test by visiting http://127.0.0.1:8000/w/title-but-replace-spaces-with-dashes in your browser.
   """
-app_name = 'wiki'
+# app_name = 'wiki'
 urlpatterns = [
     path('', PageList.as_view(), name='wiki-list-page'),
-    path('<slug:slug>/', PageDetailView.as_view(), name='wiki-details-page'),
+    path('<slug>/', PageDetailView.as_view(), name='wiki-details-page'),
 ]
