@@ -2,28 +2,32 @@ from django.shortcuts import render
 from wiki.models import Page
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from .forms import PageForm
+from django.http import HttpResponseRedirect
+
 
 
 
 class PageList(ListView):
     """
-    Establishes parameters and methods for the PageList class.
+    Renders the list of pages view.
     """
     model = Page
+    template_name = 'wiki/list.html'
+    context_object_name = 'pages'
 
-    def get(self, request):
-        """ Returns a list of wiki pages. """
-        context = {
-          'page_list': Page.objects.all(),
-        }
-        return render(request, 'list.html', context)
+    # def get(self, request):
+    #     """ Returns a list of wiki pages. """
+    #     all_pages = Page.objects.all()
+    #     context = {
+    #       'page_list': all_pages,
+    #     }
+    #     return render(request, 'wiki/list.html', context)
 
 
 class PageDetailView(DetailView):
     """
-    CHALLENGES:
-      1. On GET, render a template named `page.html`.
-      2. Replace this docstring with a description of what thos accomplishes.
+    Render the individual page view.
 
     STRETCH CHALLENGES:
       1. Import the PageForm class from forms.py.
@@ -37,13 +41,26 @@ class PageDetailView(DetailView):
            - Message Content: REPLACE_WITH_PAGE_TITLE has been successfully updated.
     """
     model = Page
+    template_name = 'wiki/page.html'
+    context_object_name = 'page'
 
-    def get(self, request, slug):
-        """ Returns a specific of wiki page by slug. """
-        context = {
-          'page': Page.objects.get(slug=slug),
-        }
-        return render(request, 'page.html', context)
+    # def get(self, request, slug):
+    #     """ Returns a specific of wiki page by slug. """
+    #     page = Page.objects.get(slug=slug) # slug is name of parameter
+    #     context = {
+    #       'page': page,
+    #     }
+    #     return render(request, 'wiki/page.html', context)
 
     def post(self, request, slug):
-        pass
+        if request.method == 'POST':
+          form = PageForm(request.POST)
+
+          if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+
+        else:
+            form = PageForm()
+
+        return render(request, 'wiki/page.html', {'form':form})
+
